@@ -87,7 +87,7 @@
 // // Main screen
 // // ---------------------------------------------------------------------------
 
-// export default function ProfilesScreen() {
+export default function ProfilesScreen() {}
 //   const [searchTerm, setSearchTerm] = useState("");
 //   const [selectedSection, setSelectedSection] = useState<SectionFilter>("All");
 

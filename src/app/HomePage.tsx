@@ -433,7 +433,7 @@ export default function HomePage() {
   );
 
   return (
-    <View className="flex-1 bg-[#1a2421]">
+    <View className="flex-1 ">
       {/* Floating profiles button */}
       <Animated.View
         style={[
@@ -442,11 +442,11 @@ export default function HomePage() {
         ]}
       >
         <Pressable
-          onPress={() => router.push("./profiles")}
+          // onPress={() => router.push("./profiles")}
           style={styles.profilesButton}
           accessibilityLabel="Browse RUET CSE 24 student profiles"
         >
-          <Text className="text-white text-xs font-bold">Profiles</Text>
+          <Text className="text-white text-2xl font-bold">Profiles</Text>
         </Pressable>
       </Animated.View>
 
@@ -455,7 +455,7 @@ export default function HomePage() {
         showsVerticalScrollIndicator={false}
       >
         {/* Header section */}
-        <View className="w-full bg-[#fff] p-2.5 flex items-center">
+        <View className="w-full text-[#fff] p-2.5 flex items-center">
           <Image
             source={require("../../assets/images/RuetLogo.png")}
             style={styles.logo}
@@ -465,7 +465,10 @@ export default function HomePage() {
 
           <DrumTitle />
 
-          <Text className="text-lg font-medium mt-1 text-white text-center">
+          <Text
+            style={styles.text}
+            className="text-lg font-medium mt-1 text-white text-center"
+          >
             Rajshahi University of Engineering and Technology CSE-2024 Batch
           </Text>
 
@@ -546,5 +549,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.7,
     shadowRadius: 10,
     elevation: 8,
+  },
+  text: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
