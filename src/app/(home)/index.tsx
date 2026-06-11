@@ -1,22 +1,15 @@
-"use client"; // remove this line if not using Expo Router's "use client" convention
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import {
   View,
   Text,
   ScrollView,
   Image,
-  Pressable,
   Animated,
-  Dimensions,
   StyleSheet,
   Platform,
 } from "react-native";
-import { useRouter } from "expo-router";
-
-// ---------------------------------------------------------------------------
-// Data
-// ---------------------------------------------------------------------------
 
 const names = [
   "FATIN",
@@ -194,10 +187,6 @@ const names = [
 const COLORS = ["#7FFF00", "#00FFFF", "#FF69B4", "#FFD700", "#FF4500"];
 const DRUM_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-";
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -225,10 +214,6 @@ interface PlacedName {
   opacity: Animated.Value;
   scale: Animated.Value;
 }
-
-// ---------------------------------------------------------------------------
-// Sub-components
-// ---------------------------------------------------------------------------
 
 /** Drum-roll title animation rendered as controlled RN Text */
 function DrumTitle() {
@@ -320,39 +305,12 @@ function NameChip({ item }: { item: PlacedName }) {
     </Animated.Text>
   );
 }
-
-// ---------------------------------------------------------------------------
-// Main screen
-// ---------------------------------------------------------------------------
-
-export default function HomePage() {
-  const router = useRouter();
+export default function HomeScreen() {
   const [placedNames, setPlacedNames] = useState<PlacedName[]>([]);
   const [mappedCount, setMappedCount] = useState(0);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const buttonScale = useRef(new Animated.Value(1)).current;
   const idRef = useRef(0);
-
-  // Pulsing "profiles" button animation
-  useEffect(() => {
-    const pulse = Animated.loop(
-      Animated.sequence([
-        Animated.timing(buttonScale, {
-          toValue: 1.08,
-          duration: 750,
-          useNativeDriver: true,
-        }),
-        Animated.timing(buttonScale, {
-          toValue: 1,
-          duration: 750,
-          useNativeDriver: true,
-        }),
-      ]),
-    );
-    pulse.start();
-    return () => pulse.stop();
-  }, [buttonScale]);
-
   // Build placed names once we know the container size
   const buildNames = useCallback((width: number, height: number) => {
     if (width === 0 || height === 0) return;
@@ -431,92 +389,73 @@ export default function HomePage() {
     },
     [containerSize, buildNames],
   );
-
   return (
-    <View className="flex-1 ">
-      {/* Floating profiles button */}
-      <Animated.View
-        style={[
-          styles.profilesButtonWrapper,
-          { transform: [{ scale: buttonScale }] },
-        ]}
-      >
-        <Pressable
-          // onPress={() => router.push("./profiles")}
-          style={styles.profilesButton}
-          accessibilityLabel="Browse RUET CSE 24 student profiles"
+    <SafeAreaView>
+      <View className="flex-1 bg-[#fff]">
+        <ScrollView
+          contentContainerStyle={{ paddingBottom: 32 }}
+          showsVerticalScrollIndicator={false}
         >
-          <Text className="text-white text-2xl font-bold">Profiles</Text>
-        </Pressable>
-      </Animated.View>
+          {/* Header section */}
+          <View className="w-full p-2.5 flex items-center font-lato">
+            <Image
+              source={require("@/assets/images/RuetLogo.png")}
+              style={styles.logo}
+              resizeMode="contain"
+              accessibilityLabel="Rajshahi University of Engineering and Technology logo"
+            />
 
-      <ScrollView
-        contentContainerStyle={{ paddingBottom: 32 }}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header section */}
-        <View className="w-full text-[#fff] p-2.5 flex items-center">
-          <Image
-            source={require("../../assets/images/RuetLogo.png")}
-            style={styles.logo}
-            resizeMode="contain"
-            accessibilityLabel="Rajshahi University of Engineering and Technology logo"
-          />
+            <DrumTitle />
 
-          <DrumTitle />
+            <Text
+              style={styles.text}
+              className="text-lg font-medium mt-1 text-white text-center font-lato"
+            >
+              Rajshahi University of Engineering and Technology CSE-2024 Batch
+            </Text>
 
-          <Text
-            style={styles.text}
-            className="text-lg font-medium mt-1 text-white text-center"
+            <Text className="text-base mt-2.5 px-5 text-white text-center max-w-xl">
+              <Text className="font-bold">RUET CSE 24</Text> is the student
+              directory and batch archive for the Computer Science and
+              Engineering 2024 cohort of Rajshahi University of Engineering and
+              Technology.
+            </Text>
+          </View>
+
+          {/* "Powered by" label */}
+          <Text className="text-white text-center text-base">Powered By ↓</Text>
+
+          {/* Names cloud container */}
+          <View
+            className="mx-auto my-5 rounded-sm overflow-hidden w-full"
+            style={styles.namesContainer}
+            onLayout={onContainerLayout}
           >
-            Rajshahi University of Engineering and Technology CSE-2024 Batch
+            {placedNames.map((item) => (
+              <NameChip key={item.id} item={item} />
+            ))}
+          </View>
+
+          {/* Mapped count */}
+          <Text className="mt-4 text-lg font-bold text-[#adff2f] text-center">
+            Mapped: {mappedCount}
           </Text>
 
-          <Text className="text-base mt-2.5 px-5 text-white text-center max-w-xl">
-            <Text className="font-bold">RUET CSE 24</Text> is the student
-            directory and batch archive for the Computer Science and Engineering
-            2024 cohort of Rajshahi University of Engineering and Technology.
+          <Text className="text-center text-gray-400 text-xs">
+            * Refresh the page for updated appearance.
           </Text>
-        </View>
 
-        {/* "Powered by" label */}
-        <Text className="text-white text-center text-base">Powered By ↓</Text>
-
-        {/* Names cloud container */}
-        <View
-          className="mx-auto my-5 rounded-sm overflow-hidden w-full"
-          style={styles.namesContainer}
-          onLayout={onContainerLayout}
-        >
-          {placedNames.map((item) => (
-            <NameChip key={item.id} item={item} />
-          ))}
-        </View>
-
-        {/* Mapped count */}
-        <Text className="mt-4 text-lg font-bold text-[#adff2f] text-center">
-          Mapped: {mappedCount}
-        </Text>
-
-        <Text className="text-center text-gray-400 text-xs">
-          * Refresh the page for updated appearance.
-        </Text>
-
-        {/* Footer */}
-        <View className="my-2 items-center">
-          <Text className="text-white text-xs font-semibold">
-            All rights reserved by RUET_CSE_24
-          </Text>
-        </View>
-      </ScrollView>
-    </View>
+          {/* Footer */}
+          <View className="my-2 items-center">
+            <Text className="text-white text-xs font-semibold">
+              All rights reserved by RUET_CSE_24
+            </Text>
+          </View>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 }
-
-// ---------------------------------------------------------------------------
-// Styles  (only what NativeWind can't express cleanly)
-// ---------------------------------------------------------------------------
-
 const styles = StyleSheet.create({
   logo: {
     width: 150,

@@ -4,4 +4,12 @@ module.exports = {
     "./src/components/**/*.{js,jsx,ts,tsx}",
   ],
   presets: [require("nativewind/preset")],
+  theme: {
+    extend: {
+      fontFamily: {
+        inter: ["Inter"],
+        lato: ["Lato"],
+      },
+    },
+  },
 };

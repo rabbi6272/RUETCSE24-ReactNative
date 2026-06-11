@@ -1,14 +1,15 @@
 {
   "expo": {
-    "name": "native-react-project",
-    "slug": "native-react-project",
+    "name": "RUET CSE 24",
+    "slug": "ruet-cse-24",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "nativereactproject",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.anonymous.nativereactproject"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,15 +27,12 @@
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router",
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
-          "android": {
-            "image": "./assets/images/splash-icon.png",
-            "imageWidth": 76
-          }
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain"
         }
       ],
       "expo-image"
