@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useColorScheme, Image } from "react-native";
+import { useColorScheme, Image, View } from "react-native";
 
 import { Tabs, ThemeProvider, DefaultTheme, DarkTheme } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -30,6 +30,10 @@ export default function RootLayout() {
       <Tabs
         screenOptions={{
           headerShown: false,
+
+          // tabBarStyle: { position: "absolute" },
+          // tabBarActiveTintColor: colorScheme === "dark" ? "#fff" : "#000",
+          // tabBarInactiveTintColor: colorScheme === "dark" ? "#888" : "#888",
         }}
       >
         <Tabs.Screen
@@ -50,7 +54,7 @@ export default function RootLayout() {
             title: "Profiles",
             tabBarIcon: ({ color }) => (
               <Image
-                source={require("@/assets/images/tabIcons/profiles1.png")}
+                source={require("@/assets/images/tabIcons/profiles.png")}
                 style={{ width: 24, height: 24, tintColor: color }}
               />
             ),

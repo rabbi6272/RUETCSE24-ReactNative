@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon",
-      "bundleIdentifier": "com.anonymous.nativereactproject"
+      "bundleIdentifier": "com.rabbi.ruetcse24",
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
@@ -19,7 +20,7 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.nativereactproject"
+      "package": "com.rabbi.ruetcse24"
     },
     "web": {
       "output": "static",

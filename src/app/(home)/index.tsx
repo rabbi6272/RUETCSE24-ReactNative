@@ -9,180 +9,20 @@ import {
   Animated,
   StyleSheet,
   Platform,
+  useColorScheme,
 } from "react-native";
 
-const names = [
-  "FATIN",
-  "MUTTAQEEN",
-  "MUGDHA",
-  "SABID",
-  "SUPRIO",
-  "HASIBUR",
-  "MOJIBUR",
-  "SHAFAYET",
-  "EMAM",
-  "MOULY",
-  "TANVIR",
-  "MAHATHIR",
-  "SIFAT",
-  "DIPANNITA",
-  "SADIA",
-  "ABHI",
-  "MAHIN",
-  "DEEP",
-  "MASUM",
-  "SUMIT",
-  "SHIHAB",
-  "KHANDAKER",
-  "MOHIDUL",
-  "RAFI",
-  "FAHMID",
-  "UTSHA",
-  "TANJIMA",
-  "NAHIN",
-  "AMIO",
-  "SOMUDRO",
-  "MUNTASIR",
-  "ARNOB",
-  "ELEM",
-  "ISRAT",
-  "AFNAN",
-  "SHOYKOT",
-  "MALIHA",
-  "AHSAN",
-  "NEHAL",
-  "MAHINUL",
-  "JIMAN",
-  "MARWA",
-  "TAHMIM",
-  "DIBYA",
-  "YASIR",
-  "RASHEDUL",
-  "TIUS",
-  "SHAMI",
-  "OMI",
-  "SADMAN",
-  "SUDIPTO",
-  "ANONNA",
-  "AZAN",
-  "NIRJAS",
-  "SUPANTHO",
-  "KAYES",
-  "PARTHA",
-  "ARSHI",
-  "ARIFUL",
-  "RABBI",
-  "OVIJIT",
-  "SABBIR",
-  "SEAM",
-  "SAMIR",
-  "TANBIR",
-  "NAEEM",
-  "ARPITA",
-  "KABIR",
-  "SAROAR",
-  "JIM",
-  "PRONOB",
-  "MAHMODUL",
-  "SAMI",
-  "BOBY",
-  "SAKIB",
-  "ROMJAN",
-  "MEHEDI",
-  "MAHERAB",
-  "ANUP",
-  "TASNIMUL",
-  "RIMA",
-  "SHAHRIAR",
-  "MUBINUR",
-  "LIMA",
-  "ABID",
-  "HIRA",
-  "RAHI",
-  "DAUD",
-  "ANIKA",
-  "FARIHA",
-  "SHADMAN",
-  "RAHIDUL",
-  "ABIR",
-  "MONTAHA",
-  "NAHID",
-  "ASHIK",
-  "AYMAN",
-  "BRISTY",
-  "MAHADI",
-  "IMRUL",
-  "PRANTO",
-  "MUKIT",
-  "MITHI",
-  "ARIAN",
-  "NUMAN",
-  "ATHAI",
-  "MUHIUDDIN",
-  "TAUSIF",
-  "SOURAV",
-  "RIFAT",
-  "AMY",
-  "ISHRAK",
-  "RAISA",
-  "SHARIQUL",
-  "MAHI",
-  "NELOY",
-  "URBOSHI",
-  "AURPON",
-  "ROHAN",
-  "SAIMUS",
-  "MUNNA",
-  "FARDIN",
-  "SHADHIN",
-  "ZARIN",
-  "TUSHER",
-  "PRANTIK",
-  "NIRJHAR",
-  "WASIF",
-  "SHAFAYAT",
-  "SHEFAUL",
-  "AFTAB",
-  "TASFIA",
-  "CHAITY",
-  "NAVID",
-  "YEASIR",
-  "SUJOY",
-  "REZA",
-  "MAHIM",
-  "AHNAF",
-  "KULSUM",
-  "ADNAN",
-  "RAFIO",
-  "SAJID",
-  "AHIN",
-  "BITTO",
-  "PRITAM",
-  "MADIHA",
-  "RIJU",
-  "ANTOR",
-  "NIHAL",
-  "AHAD",
-  "KHUTBA",
-  "FOUZIA",
-  "FAHAD",
-  "FAKID",
-  "MAHMUD",
-  "SINAN",
-  "RAHUL",
-  "SAID",
-  "RABIB",
-  "RAIHAN",
-  "MIRAJUL",
-  "MAHBUB",
-  "SORNA",
-  "WRIVU",
-  "SHANTO",
-  "OHANA",
-  "MAMUN",
-  "RATUL",
-  "BAISHAKHY",
-];
+import { names } from "@/constants/names";
+interface PlacedName {
+  id: number;
+  name: string;
+  color: string;
+  fontSize: number;
+  x: number;
+  y: number;
+  opacity: Animated.Value;
+  scale: Animated.Value;
+}
 
 const COLORS = ["#7FFF00", "#00FFFF", "#FF69B4", "#FFD700", "#FF4500"];
 const DRUM_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-";
@@ -200,22 +40,6 @@ function getRandom(min: number, max: number) {
   return Math.random() * (max - min) + min;
 }
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-interface PlacedName {
-  id: number;
-  name: string;
-  color: string;
-  fontSize: number;
-  x: number;
-  y: number;
-  opacity: Animated.Value;
-  scale: Animated.Value;
-}
-
-/** Drum-roll title animation rendered as controlled RN Text */
 function DrumTitle() {
   const [displayText, setDisplayText] = useState("CSE-24");
   const targetText = "CSE-24";
@@ -264,19 +88,28 @@ function DrumTitle() {
   }, []);
 
   return (
-    <Text className="text-5xl font-bold my-2 text-white text-center font-mono">
+    <Text
+      className="my-1 text-center font-lato"
+      style={{
+        fontSize: 28,
+        color: "#e5e7eb",
+        letterSpacing: 1.5,
+        fontFamily: "Lato",
+        fontWeight: "700",
+      }}
+      accessibilityLabel="Animated title"
+    >
       {displayText}
     </Text>
   );
 }
 
-/** Single animated name chip */
 function NameChip({ item }: { item: PlacedName }) {
   useEffect(() => {
     Animated.parallel([
       Animated.timing(item.opacity, {
         toValue: 0.8,
-        duration: 1000,
+        duration: 1500,
         useNativeDriver: true,
       }),
       Animated.spring(item.scale, {
@@ -305,12 +138,15 @@ function NameChip({ item }: { item: PlacedName }) {
     </Animated.Text>
   );
 }
+
+// const colorScheme = useColorScheme();
+
 export default function HomeScreen() {
   const [placedNames, setPlacedNames] = useState<PlacedName[]>([]);
   const [mappedCount, setMappedCount] = useState(0);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
-  const buttonScale = useRef(new Animated.Value(1)).current;
   const idRef = useRef(0);
+
   // Build placed names once we know the container size
   const buildNames = useCallback((width: number, height: number) => {
     if (width === 0 || height === 0) return;
@@ -389,15 +225,16 @@ export default function HomeScreen() {
     },
     [containerSize, buildNames],
   );
+
   return (
-    <SafeAreaView>
-      <View className="flex-1 bg-[#fff]">
-        <ScrollView
-          contentContainerStyle={{ paddingBottom: 32 }}
-          showsVerticalScrollIndicator={false}
-        >
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#090909" }}>
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: 30 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View className="flex-1">
           {/* Header section */}
-          <View className="w-full p-2.5 flex items-center font-lato">
+          <View className="pt-2 flex items-center font-lato">
             <Image
               source={require("@/assets/images/RuetLogo.png")}
               style={styles.logo}
@@ -408,13 +245,23 @@ export default function HomeScreen() {
             <DrumTitle />
 
             <Text
-              style={styles.text}
-              className="text-lg font-medium mt-1 text-white text-center font-lato"
+              className="px-2 text-center font-semibold font-lato"
+              style={{ fontSize: 20, color: "#d1d5db", lineHeight: 22 }}
+              accessibilityLabel="University and batch information"
             >
-              Rajshahi University of Engineering and Technology CSE-2024 Batch
+              Rajshahi University of Engineering and Technology
             </Text>
 
-            <Text className="text-base mt-2.5 px-5 text-white text-center max-w-xl">
+            <Text
+              className="text-base mt-2.5 "
+              style={{
+                color: "#d1d5db",
+                fontFamily: "Lato",
+                textAlign: "justify",
+                paddingHorizontal: 15,
+              }}
+              accessibilityLabel="Description"
+            >
               <Text className="font-bold">RUET CSE 24</Text> is the student
               directory and batch archive for the Computer Science and
               Engineering 2024 cohort of Rajshahi University of Engineering and
@@ -423,11 +270,14 @@ export default function HomeScreen() {
           </View>
 
           {/* "Powered by" label */}
-          <Text className="text-white text-center text-base">Powered By ↓</Text>
-
-          {/* Names cloud container */}
+          <Text
+            className="text-center text-gray-500 text-base"
+            style={{ color: "#6b7280" }}
+          >
+            Powered By ↓
+          </Text>
           <View
-            className="mx-auto my-5 rounded-sm overflow-hidden w-full"
+            className="mx-auto my-5 overflow-hidden w-full"
             style={styles.namesContainer}
             onLayout={onContainerLayout}
           >
@@ -435,24 +285,21 @@ export default function HomeScreen() {
               <NameChip key={item.id} item={item} />
             ))}
           </View>
-
           {/* Mapped count */}
-          <Text className="mt-4 text-lg font-bold text-[#adff2f] text-center">
+          <Text className="text-lg font-bold text-blue-500 text-center ">
             Mapped: {mappedCount}
           </Text>
-
           <Text className="text-center text-gray-400 text-xs">
             * Refresh the page for updated appearance.
           </Text>
-
           {/* Footer */}
-          <View className="my-2 items-center">
-            <Text className="text-white text-xs font-semibold">
+          <View className="my-1 items-center">
+            <Text className="text-gray-300 text-xs font-semibold">
               All rights reserved by RUET_CSE_24
             </Text>
           </View>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -462,36 +309,12 @@ const styles = StyleSheet.create({
     height: 150,
   },
   namesContainer: {
-    height: 600, // ~h-150 equivalent; adjust to taste
+    height: 600,
     position: "relative",
   },
   nameChip: {
     position: "absolute",
-    fontWeight: "bold",
-    fontFamily: Platform.OS === "ios" ? "Courier New" : "monospace",
-  },
-  profilesButtonWrapper: {
-    position: "absolute",
-    top: 20,
-    right: 20,
-    zIndex: 999,
-  },
-  profilesButton: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    backgroundColor: "#2563eb",
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#2563eb",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.7,
-    shadowRadius: 10,
-    elevation: 8,
-  },
-  text: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "semibold",
+    fontFamily: "Lato",
   },
 });
