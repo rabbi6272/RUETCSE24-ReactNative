@@ -30,7 +30,7 @@ This app brings everything — and everyone — into one place:
 
 ## Download
 
-[Latest APK](https://github.com/your-username/your-repo/releases/latest)
+[Latest APK](https://github.com/rabbi6272/RUETCSE24-ReactNative/releases/latest)
 
 ## Table of Contents
 
