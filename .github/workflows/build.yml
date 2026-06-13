@@ -3,11 +3,14 @@ name: EAS Build Android
 on:
   push:
     branches:
-      - master # triggers on push to main
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - name: 🏗 Setup repo
         uses: actions/checkout@v4
@@ -28,4 +31,25 @@ jobs:
         run: npm install
 
       - name: 🚀 Build Android APK
-        run: eas build --platform android --profile preview --non-interactive
+        id: build
+        run: |
+          BUILD_URL=$(eas build \
+            --platform android \
+            --profile preview \
+            --non-interactive \
+            --wait \
+            --json \
+            | jq -r '.[0].artifacts.buildUrl')
+          echo "build_url=$BUILD_URL" >> $GITHUB_OUTPUT
+
+      - name: 📥 Download APK
+        run: wget -O app-preview.apk "${{ steps.build.outputs.build_url }}"
+
+      - name: 🏷 Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: preview-${{ github.sha }}
+          name: Preview Build
+          files: app-preview.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

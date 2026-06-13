@@ -28,6 +28,10 @@ This app brings everything — and everyone — into one place:
 
 ---
 
+## Download
+
+[Latest APK](https://github.com/your-username/your-repo/releases/latest)
+
 ## Table of Contents
 
 - [Quick Start](#quick-start)
@@ -192,37 +196,6 @@ adb logcat                     # Stream device logs for debugging
 ### Register a new account
 
 On first launch, tap **Sign Up**, enter your name, RUET email, and a password. After registration you are taken to the main feed.
-
-### Browse the community feed
-
-```
-Home Tab → Feed
-```
-
-Scroll through announcements and updates posted by students and alumni. Tap any post to view details and comments.
-
-### Upload a study resource
-
-```
-Resources Tab → (+) Upload
-```
-
-```ts
-// Example: uploading a resource via the API
-const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/resources`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${userToken}`,
-  },
-  body: JSON.stringify({
-    title: "Data Structures — Lecture Notes",
-    subject: "CSE 2101",
-    semester: 3,
-    fileUrl: uploadedFileUrl,
-  }),
-});
-```
 
 ### Search for classmates
 
