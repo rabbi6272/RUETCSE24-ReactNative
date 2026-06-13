@@ -48,4 +48,3 @@ yarn-error.*
 .codex
 .agents
 
-/src/utils/FirebaseConfig.ts
