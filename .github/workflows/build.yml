@@ -33,17 +33,26 @@ jobs:
       - name: 🚀 Build Android APK
         id: build
         run: |
-          BUILD_URL=$(eas build \
+          BUILD_JSON=$(eas build \
             --platform android \
             --profile preview \
             --non-interactive \
             --wait \
-            --json \
-            | jq -r '.[0].artifacts.buildUrl')
+            --json 2>/dev/null)
+          echo "=== RAW JSON OUTPUT ==="
+          echo "$BUILD_JSON"
+          echo "======================"
+          BUILD_URL=$(echo "$BUILD_JSON" | jq -r 'if type == "array" then .[0] else . end | .artifacts.buildUrl // .buildUrl // .artifacts.url')
+          echo "Resolved URL: $BUILD_URL"
           echo "build_url=$BUILD_URL" >> $GITHUB_OUTPUT
 
       - name: 📥 Download APK
-        run: wget -O app-preview.apk "${{ steps.build.outputs.build_url }}"
+        run: |
+          if [ "${{ steps.build.outputs.build_url }}" = "null" ] || [ -z "${{ steps.build.outputs.build_url }}" ]; then
+            echo "❌ Build URL is empty or null. Check the RAW JSON OUTPUT above."
+            exit 1
+          fi
+          wget -O app-preview.apk "${{ steps.build.outputs.build_url }}"
 
       - name: 🏷 Create GitHub Release
         uses: softprops/action-gh-release@v1
