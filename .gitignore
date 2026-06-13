@@ -47,3 +47,5 @@ yarn-error.*
 .idea
 .codex
 .agents
+
+/src/utils/FirebaseConfig.ts
