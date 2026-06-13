@@ -29,7 +29,10 @@ jobs:
 
       - name: 📦 Install dependencies
         run: npm install
-
+        
+      - name: 🔐 Create Firebase config
+        run: echo "${{ secrets.FIREBASE_CONFIG }}" > src/utils/FirebaseConfig.ts
+        
       - name: 🚀 Build Android APK
         id: build
         run: |
