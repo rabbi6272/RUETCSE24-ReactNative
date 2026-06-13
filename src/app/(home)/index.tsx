@@ -181,8 +181,7 @@ export default function HomeScreen() {
     let count = 0;
 
     shuffled.forEach((name) => {
-      const fontSize = getRandom(12, 24);
-      // Estimate text width: ~0.65× fontSize per char is a decent RN mono approx
+      const fontSize = getRandom(12, 18);
       const estW = name.length * fontSize * 0.65;
       const estH = fontSize * 1.3;
 
@@ -234,7 +233,13 @@ export default function HomeScreen() {
       >
         <View className="flex-1">
           {/* Header section */}
-          <View className="pt-2 flex items-center font-lato">
+          <View
+            style={{
+              paddingHorizontal: 5,
+              paddingTop: 8,
+              alignItems: "center",
+            }}
+          >
             <Image
               source={require("@/assets/images/RuetLogo.png")}
               style={styles.logo}
@@ -245,25 +250,30 @@ export default function HomeScreen() {
             <DrumTitle />
 
             <Text
-              className="px-2 text-center font-semibold font-lato"
-              style={{ fontSize: 20, color: "#d1d5db", lineHeight: 22 }}
+              style={{
+                fontSize: 20,
+                color: "#d1d5db",
+                lineHeight: 22,
+                textAlign: "center",
+                fontWeight: "600",
+              }}
               accessibilityLabel="University and batch information"
             >
               Rajshahi University of Engineering and Technology
             </Text>
 
             <Text
-              className="text-base mt-2.5 "
               style={{
                 color: "#d1d5db",
                 fontFamily: "Lato",
                 textAlign: "justify",
                 paddingHorizontal: 15,
+                paddingTop: 10,
               }}
               accessibilityLabel="Description"
             >
-              <Text className="font-bold">RUET CSE 24</Text> is the student
-              directory and batch archive for the Computer Science and
+              <Text style={{ fontWeight: "bold" }}>RUET CSE 24</Text> is the
+              student directory and batch archive for the Computer Science and
               Engineering 2024 cohort of Rajshahi University of Engineering and
               Technology.
             </Text>
@@ -271,11 +281,12 @@ export default function HomeScreen() {
 
           {/* "Powered by" label */}
           <Text
-            className="text-center text-gray-500 text-base"
-            style={{ color: "#6b7280" }}
+            style={{ color: "#6b7280", textAlign: "center", marginTop: 15 }}
           >
             Powered By ↓
           </Text>
+
+
           <View
             className="mx-auto my-5 overflow-hidden w-full"
             style={styles.namesContainer}
@@ -285,16 +296,24 @@ export default function HomeScreen() {
               <NameChip key={item.id} item={item} />
             ))}
           </View>
-          {/* Mapped count */}
-          <Text className="text-lg font-bold text-blue-500 text-center ">
-            Mapped: {mappedCount}
-          </Text>
-          <Text className="text-center text-gray-400 text-xs">
-            * Refresh the page for updated appearance.
-          </Text>
-          {/* Footer */}
-          <View className="my-1 items-center">
-            <Text className="text-gray-300 text-xs font-semibold">
+
+
+          <View style={{ alignItems: "center", gap: 4 }}>
+            {/* Mapped count */}
+            <Text
+              style={{ color: "#3b82f6", fontWeight: "700", fontSize: 16 }}
+            >
+              Mapped: {mappedCount}/180
+            </Text>
+            <Text
+              style={{ color: "#9ca3af" }}
+            >
+              * Refresh the page for updated appearance.
+            </Text>
+            {/* Footer */}
+            <Text
+              style={{ color: "#d1d5db" }}
+            >
               All rights reserved by RUET_CSE_24
             </Text>
           </View>
@@ -309,7 +328,7 @@ const styles = StyleSheet.create({
     height: 150,
   },
   namesContainer: {
-    height: 600,
+    height: 1000,
     position: "relative",
   },
   nameChip: {

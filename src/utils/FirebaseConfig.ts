@@ -1,25 +1,22 @@
-import {  initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+// import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyCxod-eup82Oy_Od04YLHs7iOQdFGBmEHU",
+  authDomain: "ruet-cse-24.firebaseapp.com",
+  projectId: "ruet-cse-24",
+  storageBucket: "ruet-cse-24.firebasestorage.app",
+  messagingSenderId: "45659772253",
+  appId: "1:45659772253:web:963ee9de7794ee482d84b4",
+  measurementId: "G-B8107S52H7",
 };
 
 const app = initializeApp(firebaseConfig);
 
-  // initializeAppCheck(app, {
-  //   provider: new ReCaptchaV3Provider("6LcO7aYsAAAAAP-IPs5gALP0XxwlG-KqgLUsgb_k"),
-  //   isTokenAutoRefreshEnabled: true,
-  // });
+// initializeAppCheck(app, {
+//   provider: new ReCaptchaV3Provider("6LcO7aYsAAAAAP-IPs5gALP0XxwlG-KqgLUsgb_k"),
+//   isTokenAutoRefreshEnabled: true,
+// });
 
 export const db = getFirestore(app);
-
-
