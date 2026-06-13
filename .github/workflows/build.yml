@@ -3,7 +3,7 @@ name: EAS Build Android
 on:
   push:
     branches:
-      - main # triggers on push to main
+      - master # triggers on push to main
 
 jobs:
   build:
