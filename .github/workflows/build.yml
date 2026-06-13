@@ -38,7 +38,7 @@ jobs:
             --profile preview \
             --non-interactive \
             --wait \
-            --json 2>/dev/null)
+            --json)
           echo "=== RAW JSON OUTPUT ==="
           echo "$BUILD_JSON"
           echo "======================"
